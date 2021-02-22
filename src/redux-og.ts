@@ -112,3 +112,97 @@ export const selectTodoActionCreator = ({
     },
   };
 };
+
+//Reducers
+const todosInitialState: Todo[] = [
+  {
+    id: uuid(),
+    desc: "Learn React",
+    isComplete: true,
+  },
+  {
+    id: uuid(),
+    desc: "Learn Redux",
+    isComplete: true,
+  },
+  {
+    id: uuid(),
+    desc: "Learn Redux-ToolKit",
+    isComplete: false,
+  },
+];
+type TodoActionTypes =
+  | CreateTodoActionType
+  | EditTodoActionType
+  | ToggleToDoActionType
+  | DeleteTodoActionType;
+
+const todosReducer = (
+  state: Todo[] = todosInitialState,
+  action: TodoActionTypes
+) => {
+  switch (action.type) {
+    case CREATE_TODO: {
+      const { payload } = action;
+      return [...state, payload];
+    }
+    case EDIT_TODO: {
+      const { payload } = action;
+      return state.map((todo) =>
+        todo.id === payload.id ? { ...todo, desc: payload.desc } : todo
+      );
+    }
+    case TOGGLE_TODO: {
+      const { payload } = action;
+      return state.map((todo) =>
+        todo.id === payload.id
+          ? { ...todo, isComplete: payload.isComplete }
+          : todo
+      );
+    }
+    case DELETE_TODO: {
+      const { payload } = action;
+      return state.filter((todo) => todo.id !== payload.id);
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
+type SelectedTodoActionTypes = SelectTodoActionType;
+const selectedTodoReducer = (
+  state: string | null = null,
+  action: SelectedTodoActionTypes
+) => {
+  switch (action.type) {
+    case SELECT_TODO: {
+      const { payload } = action;
+      return payload.id;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
+const counterReducer = (state: number = 0, action: TodoActionTypes) => {
+  switch (action.type) {
+    case CREATE_TODO: {
+      return state + 1;
+    }
+    case EDIT_TODO: {
+      return state + 1;
+    }
+    case TOGGLE_TODO: {
+      return state + 1;
+    }
+    case DELETE_TODO: {
+      return state + 1;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
