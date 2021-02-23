@@ -1,6 +1,12 @@
-import { configureStore, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  configureStore,
+  createSlice,
+  PayloadAction,
+  getDefaultMiddleware,
+} from "@reduxjs/toolkit";
 
 import { v1 as uuid } from "uuid";
+import logger from "redux-logger";
 
 import { Todo } from "./type";
 
@@ -117,4 +123,5 @@ const reducer = {
 
 export default configureStore({
   reducer,
+  middleware: [...getDefaultMiddleware(), logger],
 });
