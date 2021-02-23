@@ -121,7 +121,9 @@ const reducer = {
   counter: counterSlice.reducer,
 };
 
+const middleware = [...getDefaultMiddleware(), logger];
+
 export default configureStore({
   reducer,
-  middleware: [...getDefaultMiddleware(), logger],
+  middleware,
 });
