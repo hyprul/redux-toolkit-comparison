@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { create } from "domain";
+import { stringify } from "querystring";
 import { v1 as uuid } from "uuid";
 
 import { Todo } from "./type";
@@ -28,12 +29,37 @@ const todosSlice = createSlice({
   reducers: {
     edit: (
       state,
-      action: PayloadAction<{
+      {
+        payload,
+      }: PayloadAction<{
         id: string;
         desc: string;
       }>
     ) => {
-        
+      const todoToEdit = state.find((todo) => todo.id === payload.id);
+      if (todoToEdit) {
+        todoToEdit.desc = payload.desc;
+      }
+    },
+    toggle: (
+      state,
+      {
+        payload,
+      }: PayloadAction<{
+        id: string;
+        isComplete: boolean;
+      }>
+    ) => {
+      const todoToToggle = state.find((todo) => todo.id === payload.id);
+      if (todoToToggle) {
+        todoToToggle.isComplete = payload.isComplete;
+      }
+    },
+    remove: (state, { payload }: PayloadAction<{ id: string }>) => {
+      const index = state.findIndex((todo) => todo.id === payload.id);
+      if (index !== -1) {
+        state.splice(index, 1);
+      }
     },
   },
 });
