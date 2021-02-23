@@ -100,6 +100,15 @@ const counterSlice = createSlice({
   },
 });
 
+export const { select: selectTodoActionCreator } = selectedTodoSlice.actions;
+
+export const {
+  create: createTodoActionCreator,
+  edit: editTodoActionCreator,
+  toggle: toggleTodoActionCreator,
+  remove: deleteTodoActionCreator,
+} = todosSlice.actions;
+
 const reducer = {
   todos: todosSlice.reducer,
   selectedTodo: selectedTodoSlice.reducer,
