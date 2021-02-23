@@ -136,6 +136,7 @@ const todosInitialState: Todo[] = [
     isComplete: false,
   },
 ];
+
 type TodoActionTypes =
   | CreateTodoActionType
   | EditTodoActionType
@@ -221,5 +222,4 @@ const reducers = combineReducers({
 export default createStore(
   reducers,
   composeWithDevTools(applyMiddleware(thunk, logger))
-  
 );
