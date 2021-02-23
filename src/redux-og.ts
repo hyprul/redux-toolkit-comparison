@@ -4,7 +4,12 @@
 // Combine our Redcuers
 // Configure our Store
 
+import { create } from "domain";
+import { combineReducers, createStore, applyMiddleware } from "redux";
 import { v1 as uuid } from "uuid";
+import thunk from "redux-thunk";
+import logger from "redux-logger";
+import { composeWithDevTools } from "redux-devtools-extension";
 import { Todo } from "./type";
 
 // Constants
@@ -206,3 +211,15 @@ const counterReducer = (state: number = 0, action: TodoActionTypes) => {
   }
 };
 
+const reducers = combineReducers({
+  todos: todosReducer,
+  selectedTodo: selectedTodoReducer,
+  counter: counterReducer,
+});
+
+// Store
+export default createStore(
+  reducers,
+  composeWithDevTools(applyMiddleware(thunk, logger))
+  
+);
